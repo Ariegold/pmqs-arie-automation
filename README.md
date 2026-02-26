@@ -141,5 +141,3 @@ A full PMQs session (20 questions) costs approximately **6p** in API calls.
 | 26 Feb 2025 | GitHub Pages deployment configured |
 
 ---
-
-*Built as part of No.10 Digital BA interview preparation · Velindre NHS Trust → Cabinet Office*
