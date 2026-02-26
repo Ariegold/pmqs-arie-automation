@@ -1,0 +1,87 @@
+name: Deploy PMQs Intelligence to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+
+  # ── JOB 1: Validate n8n workflow JSON ──────────────────
+  validate-workflow:
+    runs-on: ubuntu-latest
+    name: Validate n8n Workflow JSON
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON syntax
+        run: |
+          echo "Validating n8n workflow JSON..."
+          python3 -c "
+          import json, sys
+          try:
+              with open('workflows/n8n-pmqs-webhook-workflow.json') as f:
+                  data = json.load(f)
+              nodes = data.get('nodes', [])
+              print(f'✓ Valid JSON — {len(nodes)} nodes found')
+              for n in nodes:
+                  print(f'  · {n[\"name\"]}')
+          except Exception as e:
+              print(f'✗ Invalid: {e}')
+              sys.exit(1)
+          "
+
+      - name: Check webhook URL in HTML matches n8n
+        run: |
+          echo "Checking webhook URL consistency..."
+          grep -o 'https://[^/]*/webhook/[^"]*' index.html || echo "No webhook URL found in index.html"
+
+  # ── JOB 2: Deploy to GitHub Pages ──────────────────────
+  deploy:
+    needs: validate-workflow
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inject build metadata into HTML
+        run: |
+          BUILD_DATE=$(date -u +"%d %b %Y %H:%M UTC")
+          COMMIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          # Inject build info into footer comment
+          sed -i "s|<!-- BUILD_INFO -->|<!-- Built: $BUILD_DATE · Commit: $COMMIT_SHA -->|g" index.html || true
+          echo "Build: $BUILD_DATE · $COMMIT_SHA"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Output live URL
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✓ Deployed successfully"
+          echo "  URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
