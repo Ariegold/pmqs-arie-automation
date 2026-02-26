@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PMQs Intelligence Briefing — No.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0b0c0c;
+    --red: #b10e1e;
+    --blue: #1d70b8;
+    --green: #00703c;
+    --gold: #c8a951;
+    --mid: #505a5f;
+    --light: #f3f2f1;
+    --border: #b1b4b6;
+    --white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a1a;
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* Classification bar */
+  .class-bar {
+    background: var(--red);
+    color: #fff;
+    text-align: center;
+    padding: 6px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Header */
+  .app-header {
+    background: var(--black);
+    border-bottom: 4px solid var(--gold);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-text h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .header-text p {
+    color: #888;
+    font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(200,169,81,0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* Layout */
+  .app-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 40px 80px;
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--white);
+    border: 1px solid #ddd;
+    animation: fadeUp 0.4s ease both;
+  }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-header {
+    background: var(--black);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-header h2 {
+    color: #fff;
+    font-size: 0.72rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .card-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  .card-body { padding: 24px; }
+
+  /* Form */
+  .field { margin-bottom: 18px; }
+  .field:last-of-type { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+  .req { color: var(--red); margin-left: 3px; }
+  .field textarea,
+  .field input[type="text"],
+  .field select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    padding: 10px 12px;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem;
+    background: #fafafa;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+  .field textarea:focus,
+  .field input[type="text"]:focus,
+  .field select:focus {
+    border-color: var(--black);
+    background: #fff;
+    box-shadow: 3px 3px 0 var(--gold);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* Priority radio */
+  .priority-group { display: flex; gap: 8px; }
+  .priority-group input[type="radio"] { display: none; }
+  .priority-group label {
+    flex: 1;
+    text-align: center;
+    padding: 8px 4px;
+    border: 1.5px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--mid);
+    background: #fafafa;
+    margin-bottom: 0;
+  }
+  #p-urgent:checked + label { background: var(--red); border-color: var(--red); color: #fff; }
+  #p-high:checked + label   { background: #c45000; border-color: #c45000; color: #fff; }
+  #p-normal:checked + label { background: var(--black); border-color: var(--black); color: #fff; }
+  #p-low:checked + label    { background: var(--mid); border-color: var(--mid); color: #fff; }
+
+  /* Submit button */
+  .btn-submit {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--black);
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 3px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .btn-submit:hover { background: #222; }
+  .btn-submit:hover::after { width: 100%; }
+  .btn-submit:disabled { background: var(--border); cursor: not-allowed; }
+  .btn-submit:disabled::after { display: none; }
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #f8f8f8;
+    border-bottom: 1px solid #eee;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--mid);
+    letter-spacing: 0.04em;
+    min-height: 40px;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .status-dot.loading { background: var(--blue); animation: pulse 1s infinite; }
+  .status-dot.done    { background: var(--green); }
+  .status-dot.error   { background: var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* Empty state */
+  .briefing-empty {
+    padding: 60px 24px;
+    text-align: center;
+    color: #ccc;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    line-height: 1.8;
+  }
+  .briefing-empty .ei { font-size: 2.5rem; display: block; margin-bottom: 16px; opacity: 0.3; }
+
+  /* Output */
+  .briefing-output { display: none; padding: 24px; }
+  .briefing-output.visible { display: block; }
+
+  .restricted-banner {
+    background: #fff4f4;
+    border: 1.5px solid var(--red);
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  .brief-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    animation: fadeUp 0.3s ease both;
+  }
+  .brief-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .brief-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brief-label::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+  .brief-text { font-size: 1.05rem; line-height: 1.7; color: var(--black); }
+
+  .brief-bullets { list-style: none; padding: 0; }
+  .brief-bullets li {
+    padding: 6px 0 6px 16px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .conf-wrap { display: flex; align-items: center; gap: 14px; }
+  .conf-bar { flex: 1; height: 6px; background: #eee; overflow: hidden; }
+  .conf-fill { height: 100%; background: var(--green); transition: width 1s ease; width: 0%; }
+  .conf-fill.med { background: #c45000; }
+  .conf-fill.low { background: var(--red); }
+  .conf-num { font-family: 'DM Mono', monospace; font-size: 0.9rem; min-width: 48px; text-align: right; }
+
+  .foi-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 2px;
+  }
+  .foi-high   { background: #fff0f0; color: var(--red); border: 1px solid var(--red); }
+  .foi-medium { background: #fff7e6; color: #c45000; border: 1px solid #c45000; }
+  .foi-low    { background: #f0fff4; color: var(--green); border: 1px solid var(--green); }
+
+  .domain-badge {
+    display: inline-block;
+    background: var(--black);
+    color: var(--gold);
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sources-list { list-style: none; padding: 0; }
+  .sources-list li {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--blue);
+    padding: 3px 0;
+    word-break: break-all;
+  }
+
+  .raw-output {
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    padding: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: #333;
+  }
+
+  /* Footer */
+  .app-footer {
+    background: var(--black);
+    border-top: 2px solid #333;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: #555;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 900px) {
+    .app-body { grid-template-columns: 1fr; padding: 24px 20px 60px; }
+    .header-inner { padding: 16px 20px; }
+    .header-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="class-bar">⚠ RESTRICTED — INTERNAL USE ONLY — NO.10 DOWNING STREET — NOT FOR DISTRIBUTION</div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <h1>PMQs Intelligence System</h1>
+      <p>No.10 Downing Street · Cabinet Office · AI-Assisted Briefing</p>
+    </div>
+    <div class="header-badge">GPT-4.1 + Tavily</div>
+  </div>
+</header>
+
+<main class="app-body">
+
+  <!-- INPUT PANEL -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Submit Question for Briefing</h2>
+      <div class="card-dot"></div>
+    </div>
+    <div class="card-body">
+
+      <div class="field">
+        <label>Question Text <span class="req">*</span></label>
+        <textarea id="question" placeholder="Enter the MP's question or anticipated line of attack…"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>MP Name</label>
+          <input type="text" id="mp_name" placeholder="e.g. Sir Ed Davey">
+        </div>
+        <div class="field">
+          <label>Constituency</label>
+          <input type="text" id="constituency" placeholder="e.g. Kingston & Surbiton">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Party</label>
+          <select id="party">
+            <option value="">— Select —</option>
+            <option>Labour</option>
+            <option>Conservative</option>
+            <option>Liberal Democrat</option>
+            <option>SNP</option>
+            <option>Reform UK</option>
+            <option>Plaid Cymru</option>
+            <option>Green</option>
+            <option>DUP</option>
+            <option>Independent</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Domain</label>
+          <select id="domain">
+            <option value="">— Select —</option>
+            <option>NHS</option>
+            <option>Economy</option>
+            <option>Education</option>
+            <option>Defence</option>
+            <option>Crime</option>
+            <option>Housing</option>
+            <option>Farming</option>
+            <option>Social Care</option>
+            <option>Parliament</option>
+            <option>Immigration</option>
+            <option>Energy</option>
+            <option>Transport</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Priority</label>
+        <div class="priority-group">
+          <input type="radio" name="priority" id="p-urgent" value="Urgent">
+          <label for="p-urgent">Urgent</label>
+          <input type="radio" name="priority" id="p-high" value="High">
+          <label for="p-high">High</label>
+          <input type="radio" name="priority" id="p-normal" value="Normal" checked>
+          <label for="p-normal">Normal</label>
+          <input type="radio" name="priority" id="p-low" value="Low">
+          <label for="p-low">Low</label>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="submitBtn" onclick="submitQuestion()">
+        <div class="spinner" id="spinner"></div>
+        <span id="btnText">Generate PM Briefing</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- OUTPUT PANEL -->
+  <div class="card">
+    <div class="card-header">
+      <h2>PM Briefing Output</h2>
+      <div class="card-dot"></div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Awaiting question submission</span>
+    </div>
+
+    <div class="briefing-empty" id="emptyState">
+      <span class="ei">📋</span>
+      Complete the form and click Generate PM Briefing.<br>
+      The internal briefing will appear here for PM review only.
+    </div>
+
+    <div class="briefing-output" id="briefingOutput">
+
+      <div class="restricted-banner">
+        <span>⚠</span>
+        <span>Restricted — PM eyes only — not for external distribution</span>
+      </div>
+
+      <div class="brief-section" id="sec-threat" style="display:none">
+        <div class="brief-label">Threat Assessment</div>
+        <div class="brief-text" id="val-threat"></div>
+      </div>
+
+      <div class="brief-section" id="sec-answer" style="display:none">
+        <div class="brief-label">Suggested PM Response</div>
+        <div class="brief-text" id="val-answer"></div>
+      </div>
+
+      <div class="brief-section" id="sec-lines-take" style="display:none">
+        <div class="brief-label">Lines to Take</div>
+        <ul class="brief-bullets" id="val-lines-take"></ul>
+      </div>
+
+      <div class="brief-section" id="sec-lines-avoid" style="display:none">
+        <div class="brief-label">Lines to Avoid</div>
+        <ul class="brief-bullets" id="val-lines-avoid"></ul>
+      </div>
+
+      <div class="brief-section" id="sec-facts" style="display:none">
+        <div class="brief-label">Key Facts</div>
+        <ul class="brief-bullets" id="val-facts"></ul>
+      </div>
+
+      <div class="brief-section" id="sec-meta" style="display:none">
+        <div class="field-row" style="gap:20px; align-items:start;">
+          <div>
+            <div class="brief-label">Confidence Score</div>
+            <div class="conf-wrap">
+              <div class="conf-bar"><div class="conf-fill" id="confFill"></div></div>
+              <span class="conf-num" id="confNum">—</span>
+            </div>
+          </div>
+          <div>
+            <div class="brief-label">FOI Risk</div>
+            <span class="foi-badge" id="foiBadge">—</span>
+            <div style="font-size:0.82rem; margin-top:6px; color:#555; line-height:1.5;" id="foiText"></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="brief-label">Domain</div>
+          <span class="domain-badge" id="domainBadge">—</span>
+        </div>
+      </div>
+
+      <div class="brief-section" id="sec-sources" style="display:none">
+        <div class="brief-label">Sources</div>
+        <ul class="sources-list" id="val-sources"></ul>
+      </div>
+
+      <div class="brief-section" id="sec-raw" style="display:none">
+        <div class="brief-label">Raw Output</div>
+        <div class="raw-output" id="val-raw"></div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="app-footer">
+  <p>PMQs Intelligence System · Cabinet Office Internal Prototype · Powered by GPT-4.1 + Tavily</p>
+  <p>All outputs must be verified by a senior policy adviser before use</p>
+</footer>
+
+<script>
+  function setStatus(state, text) {
+    const dot = document.getElementById('statusDot');
+    dot.className = 'status-dot ' + state;
+    document.getElementById('statusText').textContent = text;
+  }
+
+  function extractSection(text, heading) {
+    const r = new RegExp(heading + ':?\\s*([\\s\\S]*?)(?=\\n[A-Z][A-Z\\s]+:|$)', 'i');
+    const m = text.match(r);
+    if (!m) return null;
+    return m[1].replace(/^[-•*]\s+.*/gm, '').trim() || null;
+  }
+
+  function extractBullets(text, heading) {
+    const r = new RegExp(heading + ':?\\s*([\\s\\S]*?)(?=\\n[A-Z][A-Z\\s]+:|$)', 'i');
+    const m = text.match(r);
+    if (!m) return [];
+    return m[1].split('\n')
+      .map(l => l.replace(/^[-•*\d.]+\s*/, '').trim())
+      .filter(l => l.length > 2);
+  }
+
+  function extractInline(text, heading) {
+    const m = text.match(new RegExp(heading + ':?\\s*(.+)', 'i'));
+    return m ? m[1].trim() : null;
+  }
+
+  function renderText(secId, valId, content) {
+    if (!content) return;
+    document.getElementById(secId).style.display = 'block';
+    document.getElementById(valId).textContent = content.trim();
+  }
+
+  function renderBullets(secId, valId, items) {
+    if (!items || !items.length) return;
+    document.getElementById(secId).style.display = 'block';
+    const ul = document.getElementById(valId);
+    ul.innerHTML = '';
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+  }
+
+  function parseAndRender(output) {
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('briefingOutput').classList.add('visible');
+
+    const text = typeof output === 'string' ? output : JSON.stringify(output, null, 2);
+
+    const s = {
+      threat:      extractSection(text, 'THREAT ASSESSMENT'),
+      answer:      extractSection(text, 'SUGGESTED PM RESPONSE'),
+      linesTake:   extractBullets(text, 'LINES TO TAKE'),
+      linesAvoid:  extractBullets(text, 'LINES TO AVOID'),
+      facts:       extractBullets(text, 'KEY FACTS'),
+      confidence:  extractInline(text, 'CONFIDENCE SCORE'),
+      sources:     extractBullets(text, 'SOURCES'),
+      foi:         extractInline(text, 'FOI RISK'),
+      domain:      extractInline(text, 'DOMAIN'),
+    };
+
+    const hasStructure = s.answer || s.threat || s.facts.length;
+
+    if (hasStructure) {
+      renderText('sec-threat', 'val-threat', s.threat);
+      renderText('sec-answer', 'val-answer', s.answer);
+      renderBullets('sec-lines-take', 'val-lines-take', s.linesTake);
+      renderBullets('sec-lines-avoid', 'val-lines-avoid', s.linesAvoid);
+      renderBullets('sec-facts', 'val-facts', s.facts);
+      renderBullets('sec-sources', 'val-sources', s.sources);
+
+      if (s.confidence || s.foi || s.domain) {
+        document.getElementById('sec-meta').style.display = 'block';
+        const score = parseInt(s.confidence) || 0;
+        const fill = document.getElementById('confFill');
+        fill.style.width = score + '%';
+        fill.className = 'conf-fill' + (score >= 70 ? '' : score >= 40 ? ' med' : ' low');
+        document.getElementById('confNum').textContent = score + '/100';
+
+        const foiRaw = s.foi || '';
+        const foiLevel = (foiRaw.match(/High|Medium|Low/i)?.[0] || '').toLowerCase();
+        const badge = document.getElementById('foiBadge');
+        badge.textContent = foiLevel ? foiLevel[0].toUpperCase() + foiLevel.slice(1) : foiRaw;
+        badge.className = 'foi-badge foi-' + (foiLevel || 'medium');
+        document.getElementById('foiText').textContent = foiRaw.replace(/^(High|Medium|Low)\s*[—–\-]?\s*/i, '');
+        document.getElementById('domainBadge').textContent = s.domain || '—';
+      }
+    } else {
+      document.getElementById('sec-raw').style.display = 'block';
+      document.getElementById('val-raw').textContent = text;
+    }
+  }
+
+  async function submitQuestion() {
+    const question     = document.getElementById('question').value.trim();
+    const mp_name      = document.getElementById('mp_name').value.trim();
+    const constituency = document.getElementById('constituency').value.trim();
+    const party        = document.getElementById('party').value;
+    const domain       = document.getElementById('domain').value;
+    const priority     = document.querySelector('input[name="priority"]:checked')?.value || 'Normal';
+
+    if (!question) {
+      alert('Please enter the question text before generating a briefing.');
+      return;
+    }
+
+    const btn     = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btnText');
+
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'Researching & drafting…';
+    setStatus('loading', 'Contacting research API — please wait…');
+
+    // Reset output sections
+    document.getElementById('briefingOutput').classList.remove('visible');
+    document.getElementById('emptyState').style.display = 'block';
+    ['sec-threat','sec-answer','sec-lines-take','sec-lines-avoid',
+     'sec-facts','sec-meta','sec-sources','sec-raw'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+
+    try {
+      const response = await fetch('https://arie08.app.n8n.cloud/webhook/pmqs-brief', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, mp_name, constituency, party, domain, priority })
+      });
+
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+      const data = await response.json();
+      const output = data.output ?? data;
+
+      setStatus('done',
+        `Briefing ready · ${mp_name || 'MP'} · ${constituency || '—'} · ${new Date().toLocaleTimeString('en-GB')}`
+      );
+      parseAndRender(output);
+
+    } catch (err) {
+      setStatus('error', 'Error: ' + err.message);
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('briefingOutput').classList.add('visible');
+      document.getElementById('sec-raw').style.display = 'block';
+      document.getElementById('val-raw').textContent = 'Request failed: ' + err.message;
+    } finally {
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnText.textContent = 'Generate PM Briefing';
+    }
+  }
+
+  // Cmd/Ctrl+Enter shortcut
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') submitQuestion();
+  });
+</script>
+</body>
+</html>
