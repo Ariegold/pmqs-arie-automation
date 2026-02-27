@@ -1,590 +1,481 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="govuk-template">
 <head>
-<meta charset="UTF-8">
-<title>PMQs Intelligence Briefing — No.10</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #0b0c0c;
-    --red: #b10e1e;
-    --blue: #1d70b8;
-    --green: #00703c;
-    --gold: #c8a951;
-    --mid: #505a5f;
-    --light: #f3f2f1;
-    --border: #b1b4b6;
-    --white: #ffffff;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #1a1a1a;
-    font-family: 'EB Garamond', Georgia, serif;
-    color: var(--black);
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c0c">
+  <title>PMQs Intelligence Briefing — No.10 Downing Street</title>
+  <style>
+    /* ── GDS DESIGN SYSTEM ───────────────────────────── */
+    :root {
+      --black:   #0b0c0c;
+      --header-bg: #0b0c0c;
+      --white:   #ffffff;
+      --blue:    #1d70b8;
+      --blue-dk: #003078;
+      --green:   #00703c;
+      --green-dk:#005a30;
+      --red:     #d4351c;
+      --yellow:  #ffdd00;
+      --orange:  #f47738;
+      --grey1:   #626a6e;
+      --grey2:   #b1b4b6;
+      --grey3:   #f3f2f1;
+      --border:  #b1b4b6;
+      --font: Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { font-family: var(--font); font-size: 1rem; line-height: 1.5; color: var(--black); background: #f8f8f8; -webkit-font-smoothing: antialiased; }
 
-  /* Classification bar */
-  .class-bar {
-    background: var(--red);
-    color: #fff;
-    text-align: center;
-    padding: 6px 20px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
+    /* Focus */
+    *:focus { outline: 3px solid var(--yellow); outline-offset: 0; background-color: var(--yellow); color: var(--black); box-shadow: 0 -2px var(--yellow), 0 4px var(--black); }
+    *:focus:not(:focus-visible) { outline: none; background: none; box-shadow: none; color: inherit; }
 
-  /* Header */
-  .app-header {
-    background: var(--black);
-    border-bottom: 4px solid var(--gold);
-  }
-  .header-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-  .header-text h1 {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-  .header-text p {
-    color: #888;
-    font-size: 0.78rem;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.06em;
-    margin-top: 4px;
-    text-transform: uppercase;
-  }
-  .header-badge {
-    margin-left: auto;
-    background: rgba(200,169,81,0.15);
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    padding: 6px 14px;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
+    /* Skip link */
+    .skip-link { position: absolute; top: -999px; left: -999px; background: var(--yellow); color: var(--black); font-weight: 700; padding: 10px 15px; text-decoration: none; z-index: 999; }
+    .skip-link:focus { top: 0; left: 0; }
 
-  /* Layout */
-  .app-body {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 36px 40px 80px;
-    display: grid;
-    grid-template-columns: 460px 1fr;
-    gap: 28px;
-    align-items: start;
-  }
+    /* Restricted banner */
+    .restricted-bar { background: var(--red); color: var(--white); text-align: center; padding: 7px 15px; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.04em; }
 
-  /* Cards */
-  .card {
-    background: var(--white);
-    border: 1px solid #ddd;
-    animation: fadeUp 0.4s ease both;
-  }
-  .card:nth-child(2) { animation-delay: 0.1s; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .card-header {
-    background: var(--black);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .card-header h2 {
-    color: #fff;
-    font-size: 0.72rem;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .card-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
-  .card-body { padding: 24px; }
+    /* Header */
+    .govuk-header { background: #2c2b2b; border-bottom: 10px solid var(--white); }
+    .govuk-header__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .govuk-header__logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .govuk-header__crown { width: 36px; height: 32px; fill: var(--white); flex-shrink: 0; }
+    .govuk-header__logotype-text { color: var(--white); font-size: 1.5rem; font-weight: 700; line-height: 1; }
+    .govuk-header__service { color: var(--white); font-size: 1rem; font-weight: 400; text-decoration: none; }
+    .govuk-header__service:hover { text-decoration: underline; }
 
-  /* Form */
-  .field { margin-bottom: 18px; }
-  .field:last-of-type { margin-bottom: 0; }
-  .field label {
-    display: block;
-    font-size: 0.75rem;
-    font-family: 'DM Mono', monospace;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 6px;
-  }
-  .req { color: var(--red); margin-left: 3px; }
-  .field textarea,
-  .field input[type="text"],
-  .field select {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    padding: 10px 12px;
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: 1rem;
-    background: #fafafa;
-    color: var(--black);
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  .field textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
-  .field textarea:focus,
-  .field input[type="text"]:focus,
-  .field select:focus {
-    border-color: var(--black);
-    background: #fff;
-    box-shadow: 3px 3px 0 var(--gold);
-  }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    /* Phase banner */
+    .phase-banner-wrap { background: var(--white); border-bottom: 1px solid var(--border); }
+    .phase-banner { max-width: 960px; margin: 0 auto; padding: 10px 15px; display: flex; align-items: center; gap: 10px; }
+    .govuk-tag { display: inline-block; padding: 2px 8px; font-size: 0.875rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); background: var(--blue); }
+    .govuk-tag--red    { background: var(--red); }
+    .govuk-tag--green  { background: var(--green); }
+    .govuk-tag--orange { background: var(--orange); }
+    .govuk-tag--grey   { background: var(--grey1); }
+    .phase-text { font-size: 0.875rem; }
 
-  /* Priority radio */
-  .priority-group { display: flex; gap: 8px; }
-  .priority-group input[type="radio"] { display: none; }
-  .priority-group label {
-    flex: 1;
-    text-align: center;
-    padding: 8px 4px;
-    border: 1.5px solid var(--border);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--mid);
-    background: #fafafa;
-    margin-bottom: 0;
-  }
-  #p-urgent:checked + label { background: var(--red); border-color: var(--red); color: #fff; }
-  #p-high:checked + label   { background: #c45000; border-color: #c45000; color: #fff; }
-  #p-normal:checked + label { background: var(--black); border-color: var(--black); color: #fff; }
-  #p-low:checked + label    { background: var(--mid); border-color: var(--mid); color: #fff; }
+    /* Breadcrumbs */
+    .breadcrumbs-wrap { max-width: 960px; margin: 0 auto; padding: 10px 15px 0; }
+    .govuk-breadcrumbs__list { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; }
+    .govuk-breadcrumbs__list-item { font-size: 0.875rem; }
+    .govuk-breadcrumbs__list-item + .govuk-breadcrumbs__list-item::before { content: "›"; margin-right: 4px; color: var(--grey1); }
+    .govuk-breadcrumbs__link { color: var(--blue); }
 
-  /* Submit button */
-  .btn-submit {
-    width: 100%;
-    margin-top: 20px;
-    background: var(--black);
-    color: #fff;
-    border: none;
-    padding: 14px 24px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    transition: background 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-submit::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 3px;
-    background: var(--gold);
-    transition: width 0.3s ease;
-  }
-  .btn-submit:hover { background: #222; }
-  .btn-submit:hover::after { width: 100%; }
-  .btn-submit:disabled { background: var(--border); cursor: not-allowed; }
-  .btn-submit:disabled::after { display: none; }
-  .spinner {
-    width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    /* Layout */
+    .govuk-width-container { max-width: 960px; margin: 0 auto; padding: 0 15px; }
+    main { padding: 30px 0 60px; background: #f8f8f8; }
+    .grid { display: grid; grid-template-columns: 400px 1fr; gap: 30px; align-items: start; }
+    .panel { background: #ffffff; padding: 25px 30px; border: 1px solid #b1b4b6; }
+    .card-panel { background: var(--white); padding: 25px; border: 1px solid var(--border); }
 
-  /* Status bar */
-  .status-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    background: #f8f8f8;
-    border-bottom: 1px solid #eee;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--mid);
-    letter-spacing: 0.04em;
-    min-height: 40px;
-  }
-  .status-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--border);
-    flex-shrink: 0;
-    transition: background 0.3s;
-  }
-  .status-dot.loading { background: var(--blue); animation: pulse 1s infinite; }
-  .status-dot.done    { background: var(--green); }
-  .status-dot.error   { background: var(--red); }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    /* Typography */
+    .govuk-caption-l { font-size: 1.25rem; font-weight: 400; color: var(--grey1); margin-bottom: 5px; }
+    .govuk-heading-xl { font-size: 2.5rem; font-weight: 700; line-height: 1.04; margin-bottom: 15px; color: var(--black); }
+    .govuk-heading-l  { font-size: 1.875rem; font-weight: 700; line-height: 1.09; margin-bottom: 20px; }
+    .govuk-heading-m  { font-size: 1.25rem; font-weight: 700; line-height: 1.15; margin-bottom: 10px; }
+    .govuk-heading-s  { font-size: 1.1rem; font-weight: 700; line-height: 1.31; margin-bottom: 10px; }
+    .govuk-body       { font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
+    .govuk-body-s     { font-size: 1rem; line-height: 1.4; }
+    .govuk-hint       { font-size: 1rem; line-height: 1.25; color: var(--grey1); margin-bottom: 10px; }
 
-  /* Empty state */
-  .briefing-empty {
-    padding: 60px 24px;
-    text-align: center;
-    color: #ccc;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    line-height: 1.8;
-  }
-  .briefing-empty .ei { font-size: 2.5rem; display: block; margin-bottom: 16px; opacity: 0.3; }
+    /* Form */
+    .govuk-form-group { margin-bottom: 20px; }
+    .govuk-form-group--error { border-left: 5px solid var(--red); padding-left: 15px; }
+    .govuk-label { display: block; font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; color: var(--black); }
+    .govuk-error-message { display: none; font-size: 1rem; font-weight: 700; color: var(--red); margin-bottom: 5px; }
+    .govuk-form-group--error .govuk-error-message { display: block; }
 
-  /* Output */
-  .briefing-output { display: none; padding: 24px; }
-  .briefing-output.visible { display: block; }
+    .govuk-textarea,
+    .govuk-input,
+    .govuk-select {
+      font-family: var(--font);
+      font-size: 1.1rem;
+      line-height: 1.31;
+      width: 100%;
+      padding: 5px;
+      border: 2px solid var(--black);
+      border-radius: 0;
+      color: var(--black);
+      background: var(--white);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .govuk-textarea { min-height: 150px; resize: vertical; }
+    .govuk-textarea:focus, .govuk-input:focus, .govuk-select:focus { outline: 3px solid var(--yellow); outline-offset: 0; box-shadow: inset 0 0 0 2px; }
+    .govuk-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='10' viewBox='0 0 17 10'%3E%3Cpath fill='%230b0c0c' d='M8.5 10L0 0h17z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 34px;
+    }
 
-  .restricted-banner {
-    background: #fff4f4;
-    border: 1.5px solid var(--red);
-    padding: 10px 14px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--red);
-    font-weight: 500;
-  }
+    /* Input grid */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
 
-  .brief-section {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #f0f0f0;
-    animation: fadeUp 0.3s ease both;
-  }
-  .brief-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    /* Radios */
+    .govuk-fieldset__legend { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; display: block; }
+    .govuk-radios--inline { display: flex; flex-wrap: wrap; gap: 5px 20px; }
+    .govuk-radios__item { display: flex; align-items: center; position: relative; min-height: 40px; padding: 0 15px 0 54px; margin-bottom: 5px; cursor: pointer; }
+    .govuk-radios--inline .govuk-radios__item { margin-bottom: 0; }
+    .govuk-radios__input { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; margin: 0; cursor: pointer; opacity: 0; z-index: 1; }
+    .govuk-radios__label { font-size: 1.1rem; cursor: pointer; padding: 5px 0; margin-bottom: 0; }
+    .govuk-radios__label::before { content: ''; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 2px solid var(--black); border-radius: 50%; background: var(--white); }
+    .govuk-radios__label::after  { content: ''; position: absolute; left: 17px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--black); opacity: 0; }
+    .govuk-radios__input:checked + .govuk-radios__label::after { opacity: 1; }
+    .govuk-radios__input:focus + .govuk-radios__label::before { outline: 3px solid var(--yellow); box-shadow: 0 0 0 4px var(--yellow); }
 
-  .brief-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .brief-label::after { content: ''; flex: 1; height: 1px; background: #eee; }
+    /* Button */
+    .govuk-button {
+      font-family: var(--font);
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px 9px;
+      border: 2px solid transparent;
+      border-radius: 0;
+      color: var(--white);
+      background: var(--green);
+      box-shadow: 0 2px 0 var(--green-dk);
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-appearance: none;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .govuk-button:hover { background: var(--green-dk); }
+    .govuk-button:focus { background: var(--yellow); color: var(--black); box-shadow: 0 2px 0 var(--black); outline: none; }
+    .govuk-button:active { top: 2px; box-shadow: none; position: relative; }
+    .govuk-button[disabled] { opacity: 0.5; cursor: default; }
+    .govuk-button__spinner { display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-  .brief-text { font-size: 1.05rem; line-height: 1.7; color: var(--black); }
+    /* Status */
+    .status-panel { display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: var(--grey3); border-left: 5px solid var(--border); margin-bottom: 20px; font-size: 1rem; }
+    .status-panel--loading { border-left-color: var(--blue); }
+    .status-panel--success { border-left-color: var(--green); background: #f0fff4; }
+    .status-panel--error   { border-left-color: var(--red);   background: #fff5f5; }
+    .status-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+    .status-dot--loading { background: var(--blue); animation: pulse 1s ease-in-out infinite; }
+    .status-dot--success { background: var(--green); }
+    .status-dot--error   { background: var(--red); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  .brief-bullets { list-style: none; padding: 0; }
-  .brief-bullets li {
-    padding: 6px 0 6px 16px;
-    border-left: 3px solid var(--gold);
-    margin-bottom: 8px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #333;
-  }
+    /* Empty state */
+    .briefing-empty { padding: 40px 20px; text-align: center; color: var(--grey1); border: 2px dashed var(--border); }
 
-  .conf-wrap { display: flex; align-items: center; gap: 14px; }
-  .conf-bar { flex: 1; height: 6px; background: #eee; overflow: hidden; }
-  .conf-fill { height: 100%; background: var(--green); transition: width 1s ease; width: 0%; }
-  .conf-fill.med { background: #c45000; }
-  .conf-fill.low { background: var(--red); }
-  .conf-num { font-family: 'DM Mono', monospace; font-size: 0.9rem; min-width: 48px; text-align: right; }
+    /* Output sections */
+    .briefing-section { border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .briefing-section:last-child { border-bottom: none; }
+    .briefing-section__label { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--grey1); margin-bottom: 8px; }
+    .briefing-section__text { font-size: 1.1rem; line-height: 1.5; }
 
-  .foi-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 2px;
-  }
-  .foi-high   { background: #fff0f0; color: var(--red); border: 1px solid var(--red); }
-  .foi-medium { background: #fff7e6; color: #c45000; border: 1px solid #c45000; }
-  .foi-low    { background: #f0fff4; color: var(--green); border: 1px solid var(--green); }
+    /* Inset text */
+    .govuk-inset-text { border-left: 10px solid var(--grey2); padding: 15px; margin: 0; font-size: 1.1rem; line-height: 1.5; }
+    .govuk-inset-text--blue { border-left-color: var(--blue); background: #f0f4fc; }
 
-  .domain-badge {
-    display: inline-block;
-    background: var(--black);
-    color: var(--gold);
-    padding: 3px 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+    /* List */
+    .govuk-list { list-style: none; padding: 0; margin: 0; }
+    .govuk-list--bullet li { padding-left: 20px; position: relative; margin-bottom: 6px; font-size: 1.1rem; line-height: 1.5; }
+    .govuk-list--bullet li::before { content: "—"; position: absolute; left: 0; color: var(--grey1); }
 
-  .sources-list { list-style: none; padding: 0; }
-  .sources-list li {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--blue);
-    padding: 3px 0;
-    word-break: break-all;
-  }
+    /* Confidence bar */
+    .conf-track { width: 100%; height: 10px; background: var(--grey3); border: 1px solid var(--border); margin-bottom: 6px; }
+    .conf-fill { height: 100%; background: var(--green); transition: width 0.8s ease; width: 0%; }
+    .conf-fill--medium { background: var(--orange); }
+    .conf-fill--low    { background: var(--red); }
 
-  .raw-output {
-    background: #f8f8f8;
-    border: 1px solid #eee;
-    padding: 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    color: #333;
-  }
+    /* Meta grid */
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-  /* Footer */
-  .app-footer {
-    background: var(--black);
-    border-top: 2px solid #333;
-    padding: 16px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .app-footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    color: #555;
-    letter-spacing: 0.06em;
-  }
+    /* Warning */
+    .govuk-warning-text { display: flex; align-items: flex-start; gap: 12px; font-size: 1.1rem; font-weight: 700; padding: 10px 0; margin-bottom: 20px; }
+    .govuk-warning-text__icon { display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; min-width: 35px; border: 3px solid var(--black); border-radius: 50%; font-size: 1.2rem; font-weight: 700; }
 
-  @media (max-width: 900px) {
-    .app-body { grid-template-columns: 1fr; padding: 24px 20px 60px; }
-    .header-inner { padding: 16px 20px; }
-    .header-badge { display: none; }
-  }
-</style>
+    /* Details */
+    .govuk-details { margin-bottom: 0; font-size: 1rem; }
+    .govuk-details__summary { cursor: pointer; color: var(--blue); font-weight: 700; list-style: none; padding: 5px 0; }
+    .govuk-details__summary::-webkit-details-marker { display: none; }
+    .govuk-details__summary::before { content: "▶ "; font-size: 0.7em; }
+    details[open] .govuk-details__summary::before { content: "▼ "; }
+    .govuk-details__text { padding: 10px 0 0; }
+
+    /* Footer */
+    .govuk-footer { font-size: 1rem; padding: 25px 0; border-top: 1px solid var(--border); background: var(--grey3); margin-top: 40px; }
+    .govuk-footer__inner { max-width: 960px; margin: 0 auto; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; }
+    .govuk-footer__licence { font-size: 0.875rem; color: var(--grey1); }
+    .govuk-footer__copyright { font-size: 0.875rem; text-align: right; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .govuk-heading-xl { font-size: 1.875rem; }
+      .input-grid { grid-template-columns: 1fr; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .govuk-radios--inline { flex-direction: column; }
+    }
+  </style>
 </head>
-<body>
+<body class="govuk-template__body">
 
-<div class="class-bar">⚠ RESTRICTED — INTERNAL USE ONLY — NO.10 DOWNING STREET — NOT FOR DISTRIBUTION</div>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-<header class="app-header">
-  <div class="header-inner">
-    <div class="header-text">
-      <h1>PMQs Intelligence System</h1>
-      <p>No.10 Downing Street · Cabinet Office · AI-Assisted Briefing</p>
-    </div>
-    <div class="header-badge">GPT-4.1 + Tavily</div>
+<div class="restricted-bar" role="alert">⚠ RESTRICTED — INTERNAL USE ONLY — NO.10 DOWNING STREET — NOT FOR DISTRIBUTION</div>
+
+<header class="govuk-header" role="banner">
+  <div class="govuk-header__inner">
+    <a href="/" class="govuk-header__logo" aria-label="GOV.UK">
+      <svg class="govuk-header__crown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 97" aria-hidden="true" focusable="false">
+        <path fill="#ffffff" fill-rule="evenodd" d="M25 30.2c3.5 1.5 7.7-.2 9.1-3.7 1.5-3.6-.2-7.8-3.9-9.2-3.6-1.4-7.6.3-9.1 3.9-1.4 3.5.3 7.5 3.9 9zM9 39.5c3.6 1.5 7.8-.2 9.2-3.7 1.5-3.6-.3-7.8-3.9-9.1-3.6-1.5-7.6.2-9.1 3.8-1.4 3.5.3 7.5 3.8 9zM4.4 57.2c3.5 1.5 7.7-.2 9.1-3.8 1.5-3.6-.2-7.7-3.9-9.1-3.5-1.5-7.6.3-9.1 3.8-1.4 3.5.3 7.6 3.9 9.1zm38.3-21.4c3.5 1.5 7.7-.2 9.1-3.8 1.5-3.6-.2-7.7-3.9-9.1-3.6-1.5-7.6.3-9.1 3.8-1.3 3.6.4 7.7 3.9 9.1zm64.4-5.6c-3.6 1.5-7.8-.2-9.1-3.7-1.5-3.6.2-7.8 3.8-9.2 3.6-1.4 7.7.3 9.2 3.9 1.3 3.5-.4 7.5-3.9 9zm15.9 9.3c-3.6 1.5-7.7-.2-9.1-3.7-1.5-3.6.2-7.8 3.7-9.1 3.6-1.5 7.7.2 9.2 3.8 1.5 3.5-.3 7.5-3.8 9zm4.7 17.7c-3.6 1.5-7.8-.2-9.2-3.8-1.5-3.6.2-7.7 3.9-9.1 3.6-1.5 7.7.3 9.2 3.8 1.3 3.5-.4 7.6-3.9 9.1zM89.3 35.8c-3.6 1.5-7.8-.2-9.2-3.8-1.4-3.6.2-7.7 3.9-9.1 3.6-1.5 7.7.3 9.2 3.8 1.4 3.6-.3 7.7-3.9 9.1zM69.7 17.7l8.9 4.7V9.3l-8.9 2.8c-.2-.3-.5-.6-.9-.9L72.4 0H59.6l3.5 11.2c-.3.3-.6.5-.9.9l-8.8-2.8v13.1l8.8-4.7c.3.3.6.7.9.9l-5 15.4v.1h-4.1l-4.9-15.7c-.3-.3-.6-.6-.9-.9l-8.9 4.7V9.3l-8.8-2.8L4.4 17.7h65.3zm-52.1 57s0-14.3 0-14.5c0-2.1.9-2.6 2.1-2.6h61.1c1.2 0 2.1.5 2.1 2.6v14.5h.9c2.2 0 3.8 1.8 3.8 4 0 2.4-1.6 4.2-3.8 4.2H13.7c-2.2 0-3.9-1.8-3.9-4.2 0-2.2 1.7-4 3.9-4h.9z"/>
+      </svg>
+      <span class="govuk-header__logotype-text">GOV.UK</span>
+    </a>
+    <a href="#" class="govuk-header__service">PMQs Intelligence System</a>
   </div>
 </header>
 
-<main class="app-body">
-
-  <!-- INPUT PANEL -->
-  <div class="card">
-    <div class="card-header">
-      <h2>Submit Question for Briefing</h2>
-      <div class="card-dot"></div>
-    </div>
-    <div class="card-body">
-
-      <div class="field">
-        <label>Question Text <span class="req">*</span></label>
-        <textarea id="question" placeholder="Enter the MP's question or anticipated line of attack…"></textarea>
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label>MP Name</label>
-          <input type="text" id="mp_name" placeholder="e.g. Sir Ed Davey">
-        </div>
-        <div class="field">
-          <label>Constituency</label>
-          <input type="text" id="constituency" placeholder="e.g. Kingston & Surbiton">
-        </div>
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label>Party</label>
-          <select id="party">
-            <option value="">— Select —</option>
-            <option>Labour</option>
-            <option>Conservative</option>
-            <option>Liberal Democrat</option>
-            <option>SNP</option>
-            <option>Reform UK</option>
-            <option>Plaid Cymru</option>
-            <option>Green</option>
-            <option>DUP</option>
-            <option>Independent</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Domain</label>
-          <select id="domain">
-            <option value="">— Select —</option>
-            <option>NHS</option>
-            <option>Economy</option>
-            <option>Education</option>
-            <option>Defence</option>
-            <option>Crime</option>
-            <option>Housing</option>
-            <option>Farming</option>
-            <option>Social Care</option>
-            <option>Parliament</option>
-            <option>Immigration</option>
-            <option>Energy</option>
-            <option>Transport</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Priority</label>
-        <div class="priority-group">
-          <input type="radio" name="priority" id="p-urgent" value="Urgent">
-          <label for="p-urgent">Urgent</label>
-          <input type="radio" name="priority" id="p-high" value="High">
-          <label for="p-high">High</label>
-          <input type="radio" name="priority" id="p-normal" value="Normal" checked>
-          <label for="p-normal">Normal</label>
-          <input type="radio" name="priority" id="p-low" value="Low">
-          <label for="p-low">Low</label>
-        </div>
-      </div>
-
-      <button class="btn-submit" id="submitBtn" onclick="submitQuestion()">
-        <div class="spinner" id="spinner"></div>
-        <span id="btnText">Generate PM Briefing</span>
-      </button>
-
-    </div>
+<div class="phase-banner-wrap">
+  <div class="phase-banner govuk-width-container">
+    <span class="govuk-tag govuk-tag--red">RESTRICTED</span>
+    <p class="phase-text">This is an internal Cabinet Office prototype. All outputs must be verified by a senior policy adviser before use.</p>
   </div>
+</div>
 
-  <!-- OUTPUT PANEL -->
-  <div class="card">
-    <div class="card-header">
-      <h2>PM Briefing Output</h2>
-      <div class="card-dot"></div>
+<div class="govuk-width-container">
+  <nav class="breadcrumbs-wrap" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">No.10 Downing Street</a></li>
+      <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="#">Cabinet Office Digital</a></li>
+      <li class="govuk-breadcrumbs__list-item">PMQs Intelligence</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="govuk-width-container">
+  <main id="main-content" role="main">
+
+    <div style="margin-bottom:30px;margin-top:20px">
+      <p class="govuk-caption-l">Wednesday PMQs preparation</p>
+      <h1 class="govuk-heading-xl">PMQs Intelligence Briefing</h1>
+      <p class="govuk-body">Submit an MP question to generate a research-backed PM briefing. Powered by GPT-4.1 and Tavily web search across government sources.</p>
     </div>
 
-    <div class="status-bar">
-      <div class="status-dot" id="statusDot"></div>
-      <span id="statusText">Awaiting question submission</span>
-    </div>
+    <div class="grid">
 
-    <div class="briefing-empty" id="emptyState">
-      <span class="ei">📋</span>
-      Complete the form and click Generate PM Briefing.<br>
-      The internal briefing will appear here for PM review only.
-    </div>
+      <!-- ── FORM ────────────────────────────────── -->
+      <div class="panel">
+        <form id="briefingForm" novalidate onsubmit="return false">
 
-    <div class="briefing-output" id="briefingOutput">
+          <div class="govuk-form-group" id="fg-question">
+            <label class="govuk-label" for="question">
+              MP question text
+            </label>
+            <div class="govuk-hint" id="question-hint">Enter the full question or anticipated line of attack</div>
+            <div class="govuk-error-message" id="question-error">Enter the question text</div>
+            <textarea class="govuk-textarea" id="question" name="question" rows="5" aria-describedby="question-hint"></textarea>
+          </div>
 
-      <div class="restricted-banner">
-        <span>⚠</span>
-        <span>Restricted — PM eyes only — not for external distribution</span>
-      </div>
-
-      <div class="brief-section" id="sec-threat" style="display:none">
-        <div class="brief-label">Threat Assessment</div>
-        <div class="brief-text" id="val-threat"></div>
-      </div>
-
-      <div class="brief-section" id="sec-answer" style="display:none">
-        <div class="brief-label">Suggested PM Response</div>
-        <div class="brief-text" id="val-answer"></div>
-      </div>
-
-      <div class="brief-section" id="sec-lines-take" style="display:none">
-        <div class="brief-label">Lines to Take</div>
-        <ul class="brief-bullets" id="val-lines-take"></ul>
-      </div>
-
-      <div class="brief-section" id="sec-lines-avoid" style="display:none">
-        <div class="brief-label">Lines to Avoid</div>
-        <ul class="brief-bullets" id="val-lines-avoid"></ul>
-      </div>
-
-      <div class="brief-section" id="sec-facts" style="display:none">
-        <div class="brief-label">Key Facts</div>
-        <ul class="brief-bullets" id="val-facts"></ul>
-      </div>
-
-      <div class="brief-section" id="sec-meta" style="display:none">
-        <div class="field-row" style="gap:20px; align-items:start;">
-          <div>
-            <div class="brief-label">Confidence Score</div>
-            <div class="conf-wrap">
-              <div class="conf-bar"><div class="conf-fill" id="confFill"></div></div>
-              <span class="conf-num" id="confNum">—</span>
+          <div class="input-grid">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="mp_name">MP name</label>
+              <input class="govuk-input" type="text" id="mp_name" name="mp_name" autocomplete="off">
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="constituency">Constituency</label>
+              <input class="govuk-input" type="text" id="constituency" name="constituency" autocomplete="off">
             </div>
           </div>
-          <div>
-            <div class="brief-label">FOI Risk</div>
-            <span class="foi-badge" id="foiBadge">—</span>
-            <div style="font-size:0.82rem; margin-top:6px; color:#555; line-height:1.5;" id="foiText"></div>
+
+          <div class="input-grid">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="party">Party</label>
+              <select class="govuk-select" id="party" name="party">
+                <option value="">Select</option>
+                <option>Labour</option>
+                <option>Conservative</option>
+                <option>Liberal Democrat</option>
+                <option>SNP</option>
+                <option>Reform UK</option>
+                <option>Plaid Cymru</option>
+                <option>Green</option>
+                <option>DUP</option>
+                <option>Independent</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="domain">Policy domain</label>
+              <select class="govuk-select" id="domain" name="domain">
+                <option value="">Select</option>
+                <option>NHS</option>
+                <option>Economy</option>
+                <option>Education</option>
+                <option>Defence</option>
+                <option>Crime</option>
+                <option>Housing</option>
+                <option>Farming</option>
+                <option>Social Care</option>
+                <option>Parliament</option>
+                <option>Immigration</option>
+                <option>Energy</option>
+                <option>Transport</option>
+                <option>Other</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div style="margin-top:16px;">
-          <div class="brief-label">Domain</div>
-          <span class="domain-badge" id="domainBadge">—</span>
-        </div>
+
+          <div class="govuk-form-group">
+            <fieldset>
+              <legend class="govuk-fieldset__legend">Priority</legend>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="p-urgent" name="priority" type="radio" value="Urgent">
+                  <label class="govuk-radios__label" for="p-urgent">Urgent</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="p-high" name="priority" type="radio" value="High">
+                  <label class="govuk-radios__label" for="p-high">High</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="p-normal" name="priority" type="radio" value="Normal" checked>
+                  <label class="govuk-radios__label" for="p-normal">Normal</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="p-low" name="priority" type="radio" value="Low">
+                  <label class="govuk-radios__label" for="p-low">Low</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <button class="govuk-button" id="submitBtn" type="button" onclick="submitQuestion()">
+            <span class="govuk-button__spinner" id="spinner"></span>
+            <span id="btnText">Generate PM briefing</span>
+          </button>
+
+          <p class="govuk-hint" style="margin-top:8px">Press Ctrl+Enter to submit</p>
+
+        </form>
       </div>
 
-      <div class="brief-section" id="sec-sources" style="display:none">
-        <div class="brief-label">Sources</div>
-        <ul class="sources-list" id="val-sources"></ul>
-      </div>
+      <!-- ── OUTPUT ──────────────────────────────── -->
+      <div class="panel">
 
-      <div class="brief-section" id="sec-raw" style="display:none">
-        <div class="brief-label">Raw Output</div>
-        <div class="raw-output" id="val-raw"></div>
+        <div class="status-panel" id="statusPanel" role="status" aria-live="polite">
+          <div class="status-dot" id="statusDot"></div>
+          <span class="govuk-body-s" id="statusText" style="margin:0">Awaiting question submission</span>
+        </div>
+
+        <div class="briefing-empty" id="emptyState">
+          <p class="govuk-body" style="margin:0;color:var(--grey1)">Complete the form and click Generate PM briefing.<br>The intelligence brief will appear here.</p>
+        </div>
+
+        <div id="briefingOutput" style="display:none" aria-live="polite">
+
+          <div class="govuk-warning-text" id="sec-restricted" style="display:none">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong>Restricted — PM eyes only — not for external distribution</strong>
+          </div>
+
+          <div class="briefing-section" id="sec-threat" style="display:none">
+            <p class="briefing-section__label">Threat assessment</p>
+            <p class="briefing-section__text" id="val-threat"></p>
+          </div>
+
+          <div class="briefing-section" id="sec-answer" style="display:none">
+            <p class="briefing-section__label">Suggested PM response</p>
+            <div class="govuk-inset-text govuk-inset-text--blue">
+              <p class="govuk-body" id="val-answer" style="margin:0"></p>
+            </div>
+          </div>
+
+          <div class="briefing-section" id="sec-lines-take" style="display:none">
+            <p class="briefing-section__label">Lines to take</p>
+            <ul class="govuk-list govuk-list--bullet" id="val-lines-take"></ul>
+          </div>
+
+          <div class="briefing-section" id="sec-lines-avoid" style="display:none">
+            <p class="briefing-section__label">Lines to avoid</p>
+            <ul class="govuk-list govuk-list--bullet" id="val-lines-avoid"></ul>
+          </div>
+
+          <div class="briefing-section" id="sec-facts" style="display:none">
+            <p class="briefing-section__label">Key facts</p>
+            <ul class="govuk-list govuk-list--bullet" id="val-facts"></ul>
+          </div>
+
+          <div class="briefing-section" id="sec-meta" style="display:none">
+            <div class="meta-grid">
+              <div>
+                <p class="briefing-section__label">Confidence score</p>
+                <div class="conf-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="confBar">
+                  <div class="conf-fill" id="confFill"></div>
+                </div>
+                <p class="govuk-body-s" id="confNum" style="font-weight:700"></p>
+              </div>
+              <div>
+                <p class="briefing-section__label">FOI risk</p>
+                <span class="govuk-tag" id="foiBadge">—</span>
+                <p class="govuk-body-s" id="foiText" style="margin-top:8px;color:var(--grey1)"></p>
+              </div>
+            </div>
+            <div style="margin-top:15px">
+              <p class="briefing-section__label">Policy domain</p>
+              <span class="govuk-tag govuk-tag--grey" id="domainBadge">—</span>
+            </div>
+          </div>
+
+          <div class="briefing-section" id="sec-sources" style="display:none">
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">Sources used in this briefing</summary>
+              <div class="govuk-details__text">
+                <ul class="govuk-list" id="val-sources" style="font-size:0.9rem;color:var(--blue)"></ul>
+              </div>
+            </details>
+          </div>
+
+          <div class="briefing-section" id="sec-raw" style="display:none">
+            <p class="briefing-section__label">Raw output</p>
+            <div class="govuk-inset-text" style="font-size:0.875rem;font-family:monospace;white-space:pre-wrap" id="val-raw"></div>
+          </div>
+
+        </div>
       </div>
 
     </div>
+  </main>
+</div>
+
+<footer class="govuk-footer" role="contentinfo">
+  <div class="govuk-footer__inner">
+    <div class="govuk-footer__licence">
+      <p>PMQs Intelligence System · Cabinet Office Internal Prototype</p>
+      <p style="margin-top:5px">All outputs must be verified by a senior policy adviser before use at the despatch box</p>
+    </div>
+    <div class="govuk-footer__copyright">
+      <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.2 195.7" height="17" width="41" style="display:block;margin-left:auto;margin-bottom:4px">
+        <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 170.7 97c0 .4 0 .8.1 1.2 0 .4-.1.8-.1 1.2 0 .4 0 .8.1 1.2 0 13.9 3 27 8.3 38.9L138 165.4 150.8 178l37.2-37.2c15.7 17.5 38.5 28.5 63.9 28.5A98 98 0 0 0 350.5 120l-42.7-27.2a47.08 47.08 0 0 1-8.6 40zM122.4 93.1c0-26 21.1-47.1 47.1-47.1h.6l-3.3-48.1A97.77 97.77 0 0 0 24.9 97.1a97.63 97.63 0 0 0 25.3 65.6l.6-.6 42.5-42.6c-1.1-3.7-1.7-7.6-1.7-11.6-.1-8.2 2-15.8 5.8-22.8z"/>
+      </svg>
+      <p>© Crown copyright</p>
+    </div>
   </div>
-
-</main>
-
-<footer class="app-footer">
-  <p>PMQs Intelligence System · Cabinet Office Internal Prototype · Powered by GPT-4.1 + Tavily</p>
-  <p>All outputs must be verified by a senior policy adviser before use</p>
 </footer>
 
 <script>
   function setStatus(state, text) {
-    const dot = document.getElementById('statusDot');
-    dot.className = 'status-dot ' + state;
-    document.getElementById('statusText').textContent = text;
+    const panel = document.getElementById('statusPanel');
+    const dot   = document.getElementById('statusDot');
+    const label = document.getElementById('statusText');
+    panel.className = 'status-panel' + (state ? ' status-panel--' + state : '');
+    dot.className   = 'status-dot'   + (state ? ' status-dot--'   + state : '');
+    label.textContent = text;
   }
 
   function extractSection(text, heading) {
@@ -593,85 +484,72 @@
     if (!m) return null;
     return m[1].replace(/^[-•*]\s+.*/gm, '').trim() || null;
   }
-
   function extractBullets(text, heading) {
     const r = new RegExp(heading + ':?\\s*([\\s\\S]*?)(?=\\n[A-Z][A-Z\\s]+:|$)', 'i');
     const m = text.match(r);
     if (!m) return [];
-    return m[1].split('\n')
-      .map(l => l.replace(/^[-•*\d.]+\s*/, '').trim())
-      .filter(l => l.length > 2);
+    return m[1].split('\n').map(l => l.replace(/^[-•*\d.]+\s*/, '').trim()).filter(l => l.length > 2);
   }
-
   function extractInline(text, heading) {
     const m = text.match(new RegExp(heading + ':?\\s*(.+)', 'i'));
     return m ? m[1].trim() : null;
   }
-
+  function show(id) { document.getElementById(id).style.display = ''; }
   function renderText(secId, valId, content) {
     if (!content) return;
-    document.getElementById(secId).style.display = 'block';
+    show(secId);
     document.getElementById(valId).textContent = content.trim();
   }
-
   function renderBullets(secId, valId, items) {
     if (!items || !items.length) return;
-    document.getElementById(secId).style.display = 'block';
+    show(secId);
     const ul = document.getElementById(valId);
     ul.innerHTML = '';
-    items.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      ul.appendChild(li);
-    });
+    items.forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
   }
 
   function parseAndRender(output) {
     document.getElementById('emptyState').style.display = 'none';
-    document.getElementById('briefingOutput').classList.add('visible');
-
+    show('briefingOutput');
     const text = typeof output === 'string' ? output : JSON.stringify(output, null, 2);
-
     const s = {
-      threat:      extractSection(text, 'THREAT ASSESSMENT'),
-      answer:      extractSection(text, 'SUGGESTED PM RESPONSE'),
-      linesTake:   extractBullets(text, 'LINES TO TAKE'),
-      linesAvoid:  extractBullets(text, 'LINES TO AVOID'),
-      facts:       extractBullets(text, 'KEY FACTS'),
-      confidence:  extractInline(text, 'CONFIDENCE SCORE'),
-      sources:     extractBullets(text, 'SOURCES'),
-      foi:         extractInline(text, 'FOI RISK'),
-      domain:      extractInline(text, 'DOMAIN'),
+      threat:     extractSection(text, 'THREAT ASSESSMENT'),
+      answer:     extractSection(text, 'SUGGESTED PM RESPONSE'),
+      linesTake:  extractBullets(text, 'LINES TO TAKE'),
+      linesAvoid: extractBullets(text, 'LINES TO AVOID'),
+      facts:      extractBullets(text, 'KEY FACTS'),
+      confidence: extractInline(text,  'CONFIDENCE SCORE'),
+      sources:    extractBullets(text, 'SOURCES'),
+      foi:        extractInline(text,  'FOI RISK'),
+      domain:     extractInline(text,  'DOMAIN'),
     };
-
-    const hasStructure = s.answer || s.threat || s.facts.length;
-
-    if (hasStructure) {
+    show('sec-restricted');
+    if (s.answer || s.threat || s.facts.length) {
       renderText('sec-threat', 'val-threat', s.threat);
       renderText('sec-answer', 'val-answer', s.answer);
-      renderBullets('sec-lines-take', 'val-lines-take', s.linesTake);
+      renderBullets('sec-lines-take',  'val-lines-take',  s.linesTake);
       renderBullets('sec-lines-avoid', 'val-lines-avoid', s.linesAvoid);
-      renderBullets('sec-facts', 'val-facts', s.facts);
-      renderBullets('sec-sources', 'val-sources', s.sources);
-
+      renderBullets('sec-facts',       'val-facts',       s.facts);
+      renderBullets('sec-sources',     'val-sources',     s.sources);
       if (s.confidence || s.foi || s.domain) {
-        document.getElementById('sec-meta').style.display = 'block';
+        show('sec-meta');
         const score = parseInt(s.confidence) || 0;
-        const fill = document.getElementById('confFill');
+        const fill  = document.getElementById('confFill');
         fill.style.width = score + '%';
-        fill.className = 'conf-fill' + (score >= 70 ? '' : score >= 40 ? ' med' : ' low');
-        document.getElementById('confNum').textContent = score + '/100';
-
-        const foiRaw = s.foi || '';
+        fill.className = 'conf-fill' + (score >= 70 ? '' : score >= 40 ? ' conf-fill--medium' : ' conf-fill--low');
+        document.getElementById('confBar').setAttribute('aria-valuenow', score);
+        document.getElementById('confNum').textContent = score + ' out of 100';
+        const foiRaw   = s.foi || '';
         const foiLevel = (foiRaw.match(/High|Medium|Low/i)?.[0] || '').toLowerCase();
         const badge = document.getElementById('foiBadge');
-        badge.textContent = foiLevel ? foiLevel[0].toUpperCase() + foiLevel.slice(1) : foiRaw;
-        badge.className = 'foi-badge foi-' + (foiLevel || 'medium');
+        badge.textContent = foiLevel ? foiLevel[0].toUpperCase() + foiLevel.slice(1) : (foiRaw || '—');
+        badge.className = 'govuk-tag' +
+          (foiLevel === 'high' ? ' govuk-tag--red' : foiLevel === 'medium' ? ' govuk-tag--orange' : foiLevel === 'low' ? ' govuk-tag--green' : '');
         document.getElementById('foiText').textContent = foiRaw.replace(/^(High|Medium|Low)\s*[—–\-]?\s*/i, '');
         document.getElementById('domainBadge').textContent = s.domain || '—';
       }
     } else {
-      document.getElementById('sec-raw').style.display = 'block';
+      show('sec-raw');
       document.getElementById('val-raw').textContent = text;
     }
   }
@@ -684,62 +562,50 @@
     const domain       = document.getElementById('domain').value;
     const priority     = document.querySelector('input[name="priority"]:checked')?.value || 'Normal';
 
+    const fg = document.getElementById('fg-question');
     if (!question) {
-      alert('Please enter the question text before generating a briefing.');
+      fg.classList.add('govuk-form-group--error');
+      document.getElementById('question').focus();
       return;
     }
+    fg.classList.remove('govuk-form-group--error');
 
-    const btn     = document.getElementById('submitBtn');
-    const spinner = document.getElementById('spinner');
-    const btnText = document.getElementById('btnText');
-
+    const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    spinner.style.display = 'block';
-    btnText.textContent = 'Researching & drafting…';
+    document.getElementById('spinner').style.display = 'block';
+    document.getElementById('btnText').textContent = 'Researching and drafting…';
     setStatus('loading', 'Contacting research API — please wait…');
 
-    // Reset output sections
-    document.getElementById('briefingOutput').classList.remove('visible');
-    document.getElementById('emptyState').style.display = 'block';
-    ['sec-threat','sec-answer','sec-lines-take','sec-lines-avoid',
-     'sec-facts','sec-meta','sec-sources','sec-raw'].forEach(id => {
+    document.getElementById('briefingOutput').style.display = 'none';
+    document.getElementById('emptyState').style.display = '';
+    ['sec-restricted','sec-threat','sec-answer','sec-lines-take','sec-lines-avoid','sec-facts','sec-meta','sec-sources','sec-raw'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
 
     try {
-      const response = await fetch('https://arie08.app.n8n.cloud/webhook/pmqs-brief', {
+      const res = await fetch('https://arie08.app.n8n.cloud/webhook/pmqs-brief', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question, mp_name, constituency, party, domain, priority })
       });
-
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
-
-      const data = await response.json();
-      const output = data.output ?? data;
-
-      setStatus('done',
-        `Briefing ready · ${mp_name || 'MP'} · ${constituency || '—'} · ${new Date().toLocaleTimeString('en-GB')}`
-      );
-      parseAndRender(output);
-
+      if (!res.ok) throw new Error('Server returned ' + res.status);
+      const data = await res.json();
+      setStatus('success', 'Briefing ready · ' + (mp_name || 'MP') + ' · ' + new Date().toLocaleTimeString('en-GB'));
+      parseAndRender(data.output ?? data);
     } catch (err) {
       setStatus('error', 'Error: ' + err.message);
       document.getElementById('emptyState').style.display = 'none';
-      document.getElementById('briefingOutput').classList.add('visible');
-      document.getElementById('sec-raw').style.display = 'block';
+      show('briefingOutput');
+      show('sec-raw');
       document.getElementById('val-raw').textContent = 'Request failed: ' + err.message;
     } finally {
       btn.disabled = false;
-      spinner.style.display = 'none';
-      btnText.textContent = 'Generate PM Briefing';
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('btnText').textContent = 'Generate PM briefing';
     }
   }
 
-  // Cmd/Ctrl+Enter shortcut
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') submitQuestion();
-  });
+  document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') submitQuestion(); });
 </script>
 </body>
 </html>
